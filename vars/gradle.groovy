@@ -2,7 +2,7 @@ def call(){
 
 	stage('Build & Test'){
 		env.TAREA = 'build & test'
-		sh "gradle clean buil"
+		sh "gradle clean build"
 	}	
 
 	stage('Sonar'){
