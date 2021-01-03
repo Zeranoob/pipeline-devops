@@ -7,6 +7,7 @@ pipeline {
                 stage('Pipelines') {
                         steps {
                                 script {
+                                        def env.TAREA = ''
                                         params.herramienta 
                                         if(params.herramienta == 'gradle'){ 
                                         gradle.call()
