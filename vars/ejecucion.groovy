@@ -10,10 +10,10 @@ pipeline {
                                         def STAGE_NAME = ''
                                         params.herramienta // -> gradle o maven
                                         if(params.herramienta == 'gradle'){
-                        def ejecucion = load 'gradle.groovy'
+                        
                         gradle.call()
                     }else{
-                        def ejecucion = load 'maven.groovy'
+                      
                         maven.call()
                     }
                 }
