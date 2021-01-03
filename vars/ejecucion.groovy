@@ -7,13 +7,14 @@ pipeline {
                 stage('Pipelines') {
                         steps {
                                 script {
+                                        def STAGE_NAME = ''
                                         params.herramienta // -> gradle o maven
                                         if(params.herramienta == 'gradle'){
                         def ejecucion = load 'gradle.groovy'
-                        ejecucion.call()
+                        gradle.call()
                     }else{
                         def ejecucion = load 'maven.groovy'
-                        ejecucion.call()
+                        maven.call()
                     }
                 }
                         }
