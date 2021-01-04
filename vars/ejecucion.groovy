@@ -2,7 +2,10 @@ def call(){
   
 pipeline {
         agent any
-        parameters { choice(name: 'herramienta', choices: ['gradle','maven'], description: 'Elección de herramienta de construcción para aplicación covid') }
+        parameters { 
+                choice(name: 'herramienta', choices: ['gradle','maven'], description: 'Elección de herramienta de construcción para aplicación covid') 
+                string(name: 'stage', defaultValue: '', description: '')
+        }
         stages {
                 stage('Pipelines') {
                         steps {
