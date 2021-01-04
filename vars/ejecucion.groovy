@@ -11,8 +11,8 @@ pipeline {
                         steps {
                                 script {
                                         env.TAREA = ''
-                                        params.herramienta 
-                                        if(params.herramienta == 'gradle'){ 
+                                        params.stage 
+                                        if(params.stage == 'gradle'){ 
                                         gradle.call()
                                          }else{
                                          maven.call()
