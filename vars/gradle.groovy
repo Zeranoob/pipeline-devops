@@ -1,49 +1,54 @@
 def call(){
-    def stages = ["Build & Test", "Sonar", "Run", "Rest", "Nexus"] as String[]
-    def userStages
-
-    if(params.stage != ''){
-        userStages = stage.split(';')
-    }
-     
-    if(userStages.every { stages.contains(it) }){
-    for(stg in userStages){
-        if(stg.contains("Build & Test")){
-            stage('Build & Test'){ 
-                env.TAREA = Build & Test
-                sh "gradle clean build"
-    }
+    stages = ["Build&Test", "Sonar", "Run", "Rest", "Nexus"] as String[]
+    
+        // Si stage es vacio se consideran todos los stages
+    _stage = params.stage ? params.stage.split(';') : stages
+    // Se valida stage ingresado
+    _stage.each { el ->
+        if (!stages.contains(el)) {
+            throw new Exception("Stage: $el no es una opción válida.")
         }
-        if(stg.contains("Sonar")){
+    }
+
+       if(_stage.contains('Build&Test')) {
+            stage('Build&Test') {
+              env.LAST_STAGE_NAME = env.STAGE_NAME
+                sh "gradle clean build"
+            }
+         }   
+
+        if(_stage.contains("Sonar")){
             stage('Sonar'){
-               env.TAREA = Sonar
+               env.LAST_STAGE_NAME = env.STAGE_NAME
                def scannerHome = tool 'sonar-scanner';
                withSonarQubeEnv('Sonar'){ 
                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"
-        }  
-    }
+                }  
+            }
         }
-        if(stg.contains("Run")){
+
+        if(_stage.contains("Run")){
             stage('Run'){
-                env.TAREA = Run
-                sh 'nohup bash gradle bootRun &'
-                sleep 5
-    }
+              env.LAST_STAGE_NAME = env.STAGE_NAME
+                sh 'nohup gradle bootRun &'
+                sleep 10
+            }
         }
-        if(stg.contains("Rest")){
+
+        if(_stage.contains("Rest")){
             stage('Rest'){
-                env.TAREA = Rest
+                env.LAST_STAGE_NAME = env.STAGE_NAME
                 sh 'curl -X GET http://localhost:8081/rest/mscovid/test?msg=testing'
-    }
+            }
         }
-        if(stg.contains("Nexus")){
+
+        if(_stage.contains("Nexus")){
             stage('Nexus'){
                 env.TAREA = Nexus
                 nexusPublisher nexusInstanceId: 'Nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'build/libs/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '0.0.1']]]    
-    }
+             }
         }
 
-}  
-}
-}
+    }  
+
 return this;

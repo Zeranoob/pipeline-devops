@@ -8,10 +8,14 @@ pipeline {
         }
         stages {
                 stage('Pipelines') {
+                        enviroment {
+                            LAST_STAGE_NAME = ''
+                        }
                         steps {
                                 script {
-                                        env.TAREA = ''
-                                        params.herramienta 
+                                    println 'herramienta: ' + params.herramienta
+                                    println 'stage: ' + params.stage
+                                        
                                         if(params.herramienta == 'gradle'){ 
                                         gradle.call()
                                          }else{
@@ -23,10 +27,10 @@ pipeline {
         }
          post {
                 success {
-                        slackSend teamDomain: 'devops-usach-2020', tokenCredentialId: 'token-slack', color: 'good', message: "Diego Perez][Pipeline-maven-gradle][${params.herramienta}] Ejecución exitosa."
+                        slackSend color: 'good', message: "Diego Perez][${env.JOB_NAME}][${params.herramienta}] Ejecución exitosa."
                 }
                 failure {
-                        slackSend teamDomain: 'devops-usach-2020', tokenCredentialId: 'token-slack', color: 'danger', message: "[Diego Perez][Pipeline-maven-gradle][${params.herramienta}] Ejecución fallida en stage [${env.TAREA}]."
+                        slackSend color: 'danger', message: "[Diego Perez][${env.JOB_NAME}][${params.herramienta}] Ejecución fallida en stage [${env.LAST_STAGE_NAME}]."
                                 }
                 }
         }
