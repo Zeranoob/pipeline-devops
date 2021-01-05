@@ -13,10 +13,16 @@ pipeline {
                         }
                         steps {
                                 script {
+<<<<<<< HEAD
                                     println 'herramienta: ' + params.herramienta
                                     println 'stage: ' + params.stage
                                         
                                         if(params.herramienta == 'gradle'){ 
+=======
+                                        env.TAREA = ''
+                                        params.stage 
+                                        if(params.stage == 'gradle'){ 
+>>>>>>> 41aa036a05f78f44e6e235a80d7f53dc63a459fd
                                         gradle.call()
                                          }else{
                                          maven.call()
