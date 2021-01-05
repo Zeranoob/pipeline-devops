@@ -8,12 +8,16 @@ pipeline {
         }
         stages {
                 stage('Pipelines') {
-                        enviroment {
+                        environment {
                             LAST_STAGE_NAME = ''
                         }
                         steps {
                                 script {
-                                       if(params.stage == 'gradle'){ 
+
+                                    println 'herramienta: ' + params.herramienta
+                                    println 'stage: ' + params.stage
+                                        
+                                        if(params.herramienta == 'gradle'){ 
                                         gradle.call()
                                          }else{
                                          maven.call()
