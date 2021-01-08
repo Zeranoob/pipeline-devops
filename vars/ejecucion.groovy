@@ -18,9 +18,9 @@ pipeline {
                                 echo "GIT_BRANCH ${env.GIT_BRANCH}"   
 
                                  if (env.GIT_BRANCH == "develop" || env.GIT_BRANCH == "feature"){
-                                        gradleci.call();
+                                        gradle_ci.call();
                                  } else if (env.GIT_BRANCH.contains("release")){  
-                                        gradlecd.call();                 
+                                        gradle_cd.call();                 
                                  } else {
                                          echo " La rama ${env.GIT_BRANCH} no se proceso" 
                                          }
