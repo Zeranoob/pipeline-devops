@@ -17,8 +17,6 @@ pipeline {
                                 script {
 
                                 echo "GIT_BRANCH ${env.GIT_BRANCH}"
-                                figlet params.herramienta
-                                figlet pipelineType 
 
                                  if (env.GIT_BRANCH == "develop" || env.GIT_BRANCH == "feature"){
                                         gradle_ci.call();

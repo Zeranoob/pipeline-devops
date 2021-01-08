@@ -1,4 +1,8 @@
 def call(){
+    
+    figlet 'Gradle'
+    figlet 'Integracion Continua'
+
     stages = ["Build&Test", "Sonar", "Run", "Rest", "Nexus"] as String[]
     
         // Si stage es vacio se consideran todos los stages

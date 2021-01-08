@@ -1,5 +1,8 @@
 def call(){
     
+    figlet 'Gradle'
+    figlet 'Integracion Continua'
+
     stages = ["DownloadNexus", "RunDownloadedJar", "Rest", "NexusCD"] as String[]
     
         // Si stage es vacio se consideran todos los stages
