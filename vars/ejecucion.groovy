@@ -10,18 +10,18 @@ pipeline {
                 stage('Pipelines') {
                         environment {
                             LAST_STAGE_NAME = ''
+                            
                         }
                         steps {
                                 script {
 
-                                    println 'herramienta: ' + params.herramienta
-                                    println 'stage: ' + params.stage
-                                        
-                                        if(params.herramienta == 'gradle'){ 
-                                        gradle.call()
-                                         }else{
-                                         maven.call()
-                                         }
+                       if (env.GIT_BRANCH == "develop" || env.GIT_BRANCH == "feature"){
+                                gradle_ci.call();
+                        } else if (env.GIT_BRANCH.contains("release")){  
+                                gradle_cd.call();                 
+                                } else {
+                                echo " La rama ${env.GIT_BRANCH} no se proceso" 
+                                        }
                                 }
                         }
                 }
