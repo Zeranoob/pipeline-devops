@@ -21,6 +21,8 @@ def call(){
             stage('RunDownloadedJar'){
                env.LAST_STAGE_NAME = env.STAGE_NAME
                sh "nohup java -jar DevOpsUsach2020-0.0.1.jar &"
+               sleep 10
+
             }
         }
 
