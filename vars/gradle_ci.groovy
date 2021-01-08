@@ -1,13 +1,13 @@
 def call(){
-    
+
     figlet 'Gradle'
     figlet 'Integracion Continua'
-
+        
     stages = ["Build&Test", "Sonar", "Run", "Rest", "Nexus"] as String[]
     
-        // Si stage es vacio se consideran todos los stages
+    // Si stage es vacio se ejecutan todas las stages
     _stage = params.stage ? params.stage.split(';') : stages
-    // Se valida stage ingresado
+    // Validacion de stage ingresada
     _stage.each { el ->
         if (!stages.contains(el)) {
             throw new Exception("Stage: $el no es una opción válida.")
