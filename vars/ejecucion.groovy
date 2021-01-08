@@ -15,17 +15,15 @@ pipeline {
                         steps {
                                 script {
 
-                        figlet params.herramienta
-                        figlet pipelineType
+                                echo "GIT_BRANCH ${env.GIT_BRANCH}"   
 
-                        if (params.herramienta == 'gradle') { 
-                            if(pipelineType == "CI") {
-                                gradle_ci.call(params.stage)
-                            } else { 
-                                gradle_cd.call(params.stage)
-                            }
-                        } else {
-                            maven.call()
+                                 if (env.GIT_BRANCH == "develop" || env.GIT_BRANCH == "feature"){
+                                        gradleci.call();
+                                 } else if (env.GIT_BRANCH.contains("release")){  
+                                        gradlecd.call();                 
+                                 } else {
+                                         echo " La rama ${env.GIT_BRANCH} no se proceso" 
+                                         }
                                 }
                         }
                 }
