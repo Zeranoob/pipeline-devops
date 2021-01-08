@@ -1,7 +1,7 @@
 def call(){
-    
+
     figlet 'Gradle'
-    figlet 'Integracion Continua'
+    figlet 'Despliegue Continuo'
 
     stages = ["DownloadNexus", "RunDownloadedJar", "Rest", "NexusCD"] as String[]
     
