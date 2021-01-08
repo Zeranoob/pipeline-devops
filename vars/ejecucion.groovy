@@ -10,7 +10,7 @@ pipeline {
                 stage('Pipelines') {
                         environment {
                             LAST_STAGE_NAME = ''
-                            pipelineType
+                            
                             
                         }
                         steps {
